@@ -1,25 +1,25 @@
 const { MongoClient } = require('mongodb');
 
-const OPTIONS = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+const MONGO_DB_URL = 'mongodb://127.0.0.1:27017';
 
-const MONGO_DB_URL_LOCALHOST = 'mongodb://localhost:27017/StoreManager';
-const MONGO_DB_URL = 'mongodb://mongodb:27017/StoreManager';
-const DB_NAME = 'StoreManager';
+let schema = null;
+const DB_NAME = 'blogposts';
 
-
-let db = null;
-
-const connection = () => {
-  return db
-    ? Promise.resolve(db)
-    : MongoClient.connect(MONGO_DB_URL, OPTIONS)
-      .then((conn) => {
-        db = conn.db(DB_NAME);
-        return db;
-      });  
-};
+async function connection() {
+  if (schema) return Promise.resolve(schema);
+  return MongoClient
+    .connect(MONGO_DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then((conn) => conn.db(DB_NAME))
+    .then((dbSchema) => {
+      schema = dbSchema;
+      return schema;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
 
 module.exports = connection;
