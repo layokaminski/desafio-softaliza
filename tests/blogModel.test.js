@@ -9,7 +9,7 @@ describe('Insere um novo blog no BD', () => {
   const payloadBlog = {
     title: 'Example',
     slug: 'Example test',
-    created_by: 'Layo Kaminski',
+    created_by: 'Created Test',
     content: 'Test',
   };
 
@@ -42,6 +42,15 @@ describe('Insere um novo blog no BD', () => {
       const response = await BlogModel.create(payloadBlog);
 
       expect(response).to.have.a.property('_id');
+    });
+  });
+
+  describe('quando a requisição pede todos os blogs', () => {
+    it('retorna um array com os blogs dentro de um objeto', async () => {
+      const response = await BlogModel.getAll();
+
+      expect(response).to.be.a('object');
+      expect(response).to.have.a.property('blogposts');
     });
   });
 });
