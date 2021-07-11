@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 const PORT = 3000;
 
 app.post('/blogs', validMiddlewares, BlogController.create);
+app.get('/blogs', BlogController.getAll);
 
 app.use(errorMiddlewares);
 

@@ -6,6 +6,13 @@ const create = async ({ title, content, slug, createdBy }) => {
   return createdBlog;
 };
 
+const getAll = async () => {
+  const getAllBlogs = await BlogModel.getAll();
+
+  return getAllBlogs;
+};
+
 module.exports = {
   create,
+  getAll,
 };

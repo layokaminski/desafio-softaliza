@@ -11,6 +11,16 @@ const create = async ({ title, content, slug, createdBy }) => {
   };
 };
 
+const getAll = async () => {
+  const connect = await connection();
+  const getAllBlogs = await connect.collection('blogposts').find().toArray();
+
+  return {
+    blogposts: [...getAllBlogs],
+  };
+};
+
 module.exports = {
   create,
+  getAll,
 };
