@@ -11,7 +11,7 @@ const PORT = 3000;
 
 app.post('/blogs', validMiddlewares, BlogController.create);
 
-app.use('blogs', errorMiddlewares);
+app.use(errorMiddlewares);
 
 app.listen(PORT, () => {
   console.log(`Online na port: ${PORT}`);
