@@ -11,6 +11,7 @@ const PORT = 3000;
 
 app.post('/blogs', validMiddlewares, BlogController.create);
 app.get('/blogs', BlogController.getAll);
+app.get('/blogs/:slug', BlogController.findBySlug);
 
 app.use(errorMiddlewares);
 

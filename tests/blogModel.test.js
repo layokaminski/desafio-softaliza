@@ -5,7 +5,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const BlogModel = require('../models/BlogModel');
 
-describe('Insere um novo blog no BD', () => {
+describe('Cobertura de testes para camada model', () => {
   const payloadBlog = {
     title: 'Example',
     slug: 'Example test',
@@ -31,7 +31,7 @@ describe('Insere um novo blog no BD', () => {
     MongoClient.connect.restore();
   });
 
-  describe('quando é inserido com sucesso', () => {
+  describe('quando é inserido um novo blog com sucesso', () => {
     it('retorna um objeto', async () => {
       const response = await BlogModel.create(payloadBlog);
 

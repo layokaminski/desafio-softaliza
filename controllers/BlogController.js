@@ -26,7 +26,20 @@ const getAll = async (_req, res, next) => {
   }
 };
 
+const findBySlug = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+
+    const findBlogBySlug = await BlogService.findBySlug(slug);
+
+    return res.status(SUCCESS).json(findBlogBySlug);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
+  findBySlug,
 };

@@ -7,7 +7,7 @@ const create = async ({ title, content, slug, createdBy }) => {
 
   return {
     _id: createdBlog.insertedId,
-    message: `Blog ${title} criado com sucesso0`,
+    message: `Blog ${title} criado com sucesso`,
   };
 };
 
@@ -20,7 +20,16 @@ const getAll = async () => {
   };
 };
 
+const findBySlug = async (slug) => {
+  const connect = await connection();
+  const findBlogBySlug = await connect.collection('blogposts')
+    .findOne({ slug });
+
+  return findBlogBySlug;
+};
+
 module.exports = {
   create,
   getAll,
+  findBySlug,
 };

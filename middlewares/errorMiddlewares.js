@@ -15,7 +15,12 @@ const errorMiddlewares = (err, _req, res, _next) => {
     });
   }
 
-  res.status(INTERNAL_SERVER_ERROR).json({
+  if (err.status) {
+    const { status, code, message } = err;
+    return res.status(status).json({ err: { code, message } });
+  }
+
+  return res.status(INTERNAL_SERVER_ERROR).json({
     code: 'internal',
     message: 'Internal server error',
   });
