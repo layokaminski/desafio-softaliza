@@ -37,9 +37,16 @@ const editBlog = async (slug, { title, content, editedBy }) => {
   return editedBlog;
 };
 
+const deleteBlog = async (slug) => {
+  const deletedBlog = await BlogModel.deleteBlog(slug);
+
+  return deletedBlog;
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
   editBlog,
+  deleteBlog,
 };

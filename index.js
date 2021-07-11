@@ -14,6 +14,7 @@ app.post('/blogs', validCreateBlogs, BlogController.create);
 app.get('/blogs', BlogController.getAll);
 app.get('/blogs/:slug', BlogController.findBySlug);
 app.put('/blogs/:slug', validEditBlogs, BlogController.editBlog);
+app.delete('/blogs/:slug', BlogController.deleteBlog);
 
 app.use(errorMiddlewares);
 

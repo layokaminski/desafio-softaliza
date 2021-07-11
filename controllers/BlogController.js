@@ -53,9 +53,23 @@ const editBlog = async (req, res, next) => {
   }
 };
 
+const deleteBlog = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    await BlogService.findBySlug(slug);
+
+    const deletedBlog = await BlogService.deleteBlog(slug);
+
+    return res.status(SUCCESS).json(deletedBlog);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
   editBlog,
+  deleteBlog,
 };

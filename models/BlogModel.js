@@ -43,9 +43,18 @@ const editBlog = async (slug, { title, content, editedBy }) => {
   };
 };
 
+const deleteBlog = async (slug) => {
+  const connect = await connection();
+  const deletedBlog = await connect.collection('blogposts')
+    .findOneAndDelete({ slug });
+  
+  return deletedBlog.value;
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
   editBlog,
+  deleteBlog,
 };
