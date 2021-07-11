@@ -28,8 +28,24 @@ const findBySlug = async (slug) => {
   return findBlogBySlug;
 };
 
+const editBlog = async (slug, { title, content, editedBy }) => {
+  const connect = await connection();
+  const editedBlog = await connect.collection('blogposts')
+    .updateOne({ slug }, { $set: { title, content, editedBy } });
+
+  if (editedBlog.modifiedCount < 1) {
+    return false;
+  }
+
+  return {
+    slug,
+    message: `${editedBy} editou o blog ${title} com sucesso`,
+  };
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
+  editBlog,
 };

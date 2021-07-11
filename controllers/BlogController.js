@@ -38,8 +38,24 @@ const findBySlug = async (req, res, next) => {
   }
 };
 
+const editBlog = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const { title, content, edited_by: editedBy } = req.body;
+
+    await BlogService.findBySlug(slug);
+
+    const editedBlog = await BlogService.editBlog(slug, { title, content, editedBy });
+
+    return res.status(SUCCESS).json(editedBlog);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
+  editBlog,
 };

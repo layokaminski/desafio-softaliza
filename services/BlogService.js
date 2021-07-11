@@ -31,8 +31,15 @@ const findBySlug = async (slug) => {
   return findBlogBySlug;
 };
 
+const editBlog = async (slug, { title, content, editedBy }) => {
+  const editedBlog = await BlogModel.editBlog(slug, { title, content, editedBy });
+
+  return editedBlog;
+};
+
 module.exports = {
   create,
   getAll,
   findBySlug,
+  editBlog,
 };
