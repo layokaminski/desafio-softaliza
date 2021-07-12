@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 const PORT = 3000;
 
+// Endpoint para criação de usuários
 app.post('/users', validUser, UserController.create);
 
 // Endpoint para criação de blogs
