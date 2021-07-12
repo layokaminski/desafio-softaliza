@@ -5,14 +5,20 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const BlogModel = require('../models/BlogModel');
 
-describe('Cobertura de testes para camada model', () => {
-  const payloadBlog = {
-    title: 'Example',
-    slug: 'Example test',
-    created_by: 'Created Test',
-    content: 'Test',
-  };
+const editedPayloadBlog = {
+  title: 'Example edit',
+  content: 'Test edit',
+  edited_by: 'Edited Test',
+};
 
+const payloadBlog = {
+  title: 'Example',
+  slug: 'Example test',
+  created_by: 'Created Test',
+  content: 'Test',
+};
+
+describe('Cobertura de testes para camada model', () => {
   before(async () => {
     const DBServer = new MongoMemoryServer();
     const URLMock = await DBServer.getUri();
@@ -47,10 +53,34 @@ describe('Cobertura de testes para camada model', () => {
 
   describe('quando a requisição pede todos os blogs', () => {
     it('retorna um array com os blogs dentro de um objeto', async () => {
-      const response = await BlogModel.getAll();
+      const response = await BlogModel.getAll(payloadBlog);
 
       expect(response).to.be.a('object');
       expect(response).to.have.a.property('blogposts');
+    });
+  });
+
+  describe('quando a requisição pede um único blog', () => {
+    it('retorna um objeto com o mesmo slug que foi usado como parâmetro', async () => {
+      const response = await BlogModel.findBySlug(payloadBlog.slug);
+
+      expect(response.slug).to.be.equal(payloadBlog.slug);
+    });
+  });
+
+  describe('quando a requisição edita as informações do blog', () => {
+    it('Deve retonar um objeto com duas keys, uma é "slug", outra é uma "message"', async () => {
+      const response = await BlogModel.editBlog(payloadBlog.slug, editedPayloadBlog);
+
+      expect(response).to.be.an('object').to.have.all.keys('slug', 'message');
+    });
+  });
+
+  describe('quando a requisição deleta o blog', () => {
+    it('Deve retonar o blog deletado  ', async () => {
+      const response = await BlogModel.deleteBlog(payloadBlog.slug);
+
+      expect(response).to.be.an('object');
     });
   });
 });
